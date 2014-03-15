@@ -21,7 +21,7 @@ var app = app || {};
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
 			'click #start-button': 'startStopTimer',
-			'click #reset-button': 'clearCompleted',
+			'click #reset-button': 'resetTimer',
 			'click #lap-button': 'nextLap',
 			'click #clear-completed': 'clearCompleted',
 		},
@@ -32,11 +32,12 @@ var app = app || {};
 		initialize: function () {
 			this.$startButton = this.$('#start-button');
 			this.$lapButton = this.$('#lap-button');
-			this.$lapButton.hide();
+			this.$lapButton.disable(true);
 			this.$resetButton = this.$('#reset-button');
 			this.$footer = this.$('#footer');
 			this.$time = this.$('#time');
 			this.$main = this.$('#main');
+			this.timerStatus = "Stopped";
 			this.intervalID = null;
 
 			this.data = [];
@@ -144,14 +145,27 @@ var app = app || {};
 		// If you hit start in the main input field, create new **Lap** model,
 		// persisting it to *localStorage*.
 		startStopTimer: function (e) {
-			if(!this.timerRunning) {
+			//Start from stopped
+			if(this.timerStatus == "Stopped") {
 				this.startTimer();
-				this.$startButton.html("Stop");
-				this.$lapButton.show();
-			} else {
-				this.stopTimer();
-				this.$startButton.html("Start");
-				this.$lapButton.hide();
+				this.$startButton.html("Pause");
+				this.$lapButton.disable(false);
+				this.$resetButton.disable(true);
+				this.timerStatus = "Running";
+			} else if (this.timerStatus == "Running") {
+				//Pause from "Running"
+				this.pauseTimer();
+				this.$startButton.html("Unpause");
+				this.$lapButton.disable(true);
+				this.$resetButton.disable(false);
+				this.timerStatus = "Paused";
+			} else if (this.timerStatus == "Paused") {
+				//Run from paused
+				this.unPauseTimer();
+				this.$startButton.html("Pause");
+				this.$lapButton.disable(false);
+				this.$resetButton.disable(true);
+				this.timerStatus = "Running";
 			}
 		},
 
@@ -160,7 +174,6 @@ var app = app || {};
 
 			var d = new Date();
 			this.timerStarted = this.lapStarted = d.getTime();
-
 			this.currentLapModel = app.laps.create(this.newAttributes());
 
 			if(!this.intervalID) {
@@ -169,15 +182,17 @@ var app = app || {};
 				})(this);
 			}
 
-			this.timerRunning = true;
+			this.timerStatus = "Running";
 		},
 
 		stopTimer: function (e) {
 			console.log("Stop Timer");
 
 			//Set current lap to completed
-			this.currentLapModel.set('completed', true);
-			this.currentLapModel.save();
+			if(this.currentLapModel != null) {
+				this.currentLapModel.set('completed', true);
+				this.currentLapModel.save();
+			}
 
 			window.clearInterval(this.intervalID);
 			this.intervalID = null;
@@ -185,7 +200,42 @@ var app = app || {};
 			var d = new Date();
 			this.timerStarted = this.lapStarted = 0;
 			this.currentLapModel = null;
-			this.timerRunning = false;
+			this.timerStatus = "Stopped";
+			this.$startButton.html("Start");
+		},
+
+		pauseTimer: function (e) {
+			console.log("Pause Timer");
+
+			var d = new Date();
+			this.pauseStarted = d.getTime();
+			this.currentLapModel.save();
+
+			window.clearInterval(this.intervalID);
+			this.intervalID = null;
+
+			this.timerStatus = "Paused";
+		},
+
+		unPauseTimer: function (e) {
+			console.log("Unpause Timer");
+
+			var d = new Date();
+			var pauseLength = d.getTime() - this.pauseStarted;
+			this.lapStarted = this.lapStarted + pauseLength;
+
+			if(!this.intervalID) {
+				(function(view) {
+				  view.intervalID = window.setInterval(function() { view.updateCurrentLapTime(); }, 113);
+				})(this);
+			}
+
+			this.timerStatus = "Running";
+		},
+
+		resetTimer: function (e) {
+			this.stopTimer();
+			this.clearCompleted();
 		},
 
 		currentLapTime: function() {
@@ -224,7 +274,11 @@ var app = app || {};
 
 		// Clear all completed todo items, destroying their models.
 		clearCompleted: function () {
-			_.invoke(app.laps.completed(), 'destroy');
+			var model = null;
+			while (model = app.laps.first()) {
+				model.destroy();
+			}
+			// _.invoke(app.laps.completed(), 'destroy');
 			return false;
 		}
 	});

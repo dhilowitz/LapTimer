@@ -22,7 +22,6 @@ button {
 body {
 	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
-	background: #eaeaea url('../images/bg.png');
 	color: #4d4d4d;
 	width: 550px;
 	margin: 0 auto;
@@ -50,16 +49,7 @@ input[type="checkbox"] {
 				0 25px 50px 0 rgba(0, 0, 0, 0.15);
 }
 
-#todoapp:before {
-	content: '';
-	border-left: 1px solid #f5d6d6;
-	border-right: 1px solid #f5d6d6;
-	width: 2px;
-	position: absolute;
-	top: 0;
-	left: 40px;
-	height: 100%;
-}
+
 
 #todoapp input::-webkit-input-placeholder {
 	font-style: italic;
@@ -381,47 +371,6 @@ hr {
 	border-bottom: 1px dashed #F7F7F7;
 }
 
-.learn a {
-	font-weight: normal;
-	text-decoration: none;
-	color: #b83f45;
-}
-
-.learn a:hover {
-	text-decoration: underline;
-	color: #787e7e;
-}
-
-.learn h3,
-.learn h4,
-.learn h5 {
-	margin: 10px 0;
-	font-weight: 500;
-	line-height: 1.2;
-	color: #000;
-}
-
-.learn h3 {
-	font-size: 24px;
-}
-
-.learn h4 {
-	font-size: 18px;
-}
-
-.learn h5 {
-	margin-bottom: 0;
-	font-size: 14px;
-}
-
-.learn ul {
-	padding: 0;
-	margin: 0 0 30px 25px;
-}
-
-.learn li {
-	line-height: 20px;
-}
 
 .learn p {
 	font-size: 15px;
@@ -489,32 +438,3 @@ hr {
 	border-top-color: rgba(0, 0, 0, .04);
 }
 
-.learn-bar > .learn {
-	position: absolute;
-	width: 272px;
-	top: 8px;
-	left: -300px;
-	padding: 10px;
-	border-radius: 5px;
-	background-color: rgba(255, 255, 255, .6);
-	-webkit-transition-property: left;
-	transition-property: left;
-	-webkit-transition-duration: 500ms;
-	transition-duration: 500ms;
-}
-
-@media (min-width: 899px) {
-	.learn-bar {
-		width: auto;
-		margin: 0 0 0 300px;
-	}
-
-	.learn-bar > .learn {
-		left: 8px;
-	}
-
-	.learn-bar #todoapp {
-		width: 550px;
-		margin: 130px auto 40px auto;
-	}
-}

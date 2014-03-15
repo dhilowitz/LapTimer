@@ -3,6 +3,14 @@
 var app = app || {};
 var ENTER_KEY = 13;
 
+jQuery.fn.extend({
+    disable: function(state) {
+        return this.each(function() {
+            this.disabled = state;
+        });
+    }
+});
+
 function timeFormat(ms) {
 	ms = ms.toFixed(0);
 
@@ -13,9 +21,8 @@ function timeFormat(ms) {
 	var ms = ms - (ss * 1000) - (mm * 60 * 1000) - (hh * 60 * 60 * 1000);
 
 	if(ms > 0) {
-		ms = (((ms*1000).toFixed(3))/1000);
+		ms = String(ms + "000").slice(0,3);
 	}
-
 
 	if(hh > 0) {
 		if (mm < 10) {mm = '0' + mm;}
