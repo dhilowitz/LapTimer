@@ -349,6 +349,23 @@ label[for='toggle-all'] {
 	font-weight: bold;
 }
 
+#start-button, #stop-button, #lap-button {
+	float: right;
+	position: relative;
+	line-height: 20px;
+	text-decoration: none;
+	background: rgba(0, 0, 0, 0.1);
+	font-size: 13px;
+	padding: 0 10px;
+	border-radius: 3px;
+	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+#start-button:hover, #stop-button:hover, #lap-button:hover {
+	background: rgba(0, 0, 0, 0.15);
+	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
+}
+
 #clear-completed {
 	float: right;
 	position: relative;

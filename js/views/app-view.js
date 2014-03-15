@@ -20,16 +20,16 @@ var app = app || {};
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
 			'keypress #new-todo': 'createOnEnter',
+			'click #start-button': 'startTimer',
 			'click #clear-completed': 'clearCompleted',
-			'click #toggle-all': 'toggleAllComplete'
 		},
 
 		// At initialization we bind to the relevant events on the `Todos`
 		// collection, when items are added or changed. Kick things off by
 		// loading any preexisting todos that might be saved in *localStorage*.
 		initialize: function () {
-			this.allCheckbox = this.$('#toggle-all')[0];
 			this.$input = this.$('#new-todo');
+			this.$startButton = this.$('#start-button');
 			this.$footer = this.$('#footer');
 			this.$main = this.$('#main');
 
@@ -66,7 +66,6 @@ var app = app || {};
 				this.$footer.hide();
 			}
 
-			this.allCheckbox.checked = !remaining;
 		},
 
 		// Add a single todo item to the list by creating a view for it, and
@@ -110,20 +109,21 @@ var app = app || {};
 			this.$input.val('');
 		},
 
+		// If you hit start in the main input field, create new **Todo** model,
+		// persisting it to *localStorage*.
+		startTimer: function (e) {
+			this.$input.val("124");
+
+			app.todos.create(this.newAttributes());
+			this.$input.val('');
+		},
+
 		// Clear all completed todo items, destroying their models.
 		clearCompleted: function () {
 			_.invoke(app.todos.completed(), 'destroy');
 			return false;
-		},
-
-		toggleAllComplete: function () {
-			var completed = this.allCheckbox.checked;
-
-			app.todos.each(function (todo) {
-				todo.save({
-					'completed': completed
-				});
-			});
 		}
+
+		
 	});
 })(jQuery);

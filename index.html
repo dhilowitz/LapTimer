@@ -11,19 +11,18 @@
 			<header id="header">
 				<h1>lap timer</h1>
 				<button id="start-button" value="Start">Start</button>
+				<button id="stop-button">Stop</button>
 				<input id="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section id="main">
-				<input id="toggle-all" type="checkbox">
-				<label for="toggle-all">Mark all as complete</label>
 				<ul id="todo-list"></ul>
 			</section>
 			<footer id="footer"></footer>
 		</section>
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
-			<p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+			<p>Written by <a href="https://github.com/dhilowitz">David Hilowitz</a></p>
+			<p>Based on the <a href="http://todomvc.com">TodoMVC</a> example by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
 		</footer>
 		<script type="text/template" id="item-template">
 			<div class="view">
@@ -34,7 +33,7 @@
 			<input class="edit" value="<%- title %>">
 		</script>
 		<script type="text/template" id="stats-template">
-			<span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
+			<span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'lap' : 'laps' %></span>
 			<ul id="filters">
 				<li>
 					<a class="selected" href="#/">All</a>
@@ -50,7 +49,7 @@
 			<button id="clear-completed">Clear completed (<%= completed %>)</button>
 			<% } %>
 		</script>
-		<script src="bower_components/todomvc-common/base.js"></script>
+		<scripta src="bower_components/todomvc-common/base.js"></script>
 		<script src="bower_components/jquery/jquery.js"></script>
 		<script src="bower_components/underscore/underscore.js"></script>
 		<script src="bower_components/backbone/backbone.js"></script>
