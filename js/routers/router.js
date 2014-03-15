@@ -4,23 +4,23 @@ var app = app || {};
 (function () {
 	'use strict';
 
-	// Todo Router
+	// Lap Router
 	// ----------
-	var TodoRouter = Backbone.Router.extend({
+	var LapRouter = Backbone.Router.extend({
 		routes: {
 			'*filter': 'setFilter'
 		},
 
 		setFilter: function (param) {
 			// Set the current filter to be used
-			app.TodoFilter = param || '';
+			app.LapFilter = param || '';
 
 			// Trigger a collection filter event, causing hiding/unhiding
-			// of Todo view items
+			// of Lap view items
 			app.todos.trigger('filter');
 		}
 	});
 
-	app.TodoRouter = new TodoRouter();
+	app.LapRouter = new LapRouter();
 	Backbone.history.start();
 })();

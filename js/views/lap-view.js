@@ -4,11 +4,11 @@ var app = app || {};
 (function ($) {
 	'use strict';
 
-	// Todo Item View
+	// Lap Item View
 	// --------------
 
 	// The DOM element for a todo item...
-	app.TodoView = Backbone.View.extend({
+	app.LapView = Backbone.View.extend({
 		//... is a list tag.
 		tagName:  'li',
 
@@ -23,8 +23,8 @@ var app = app || {};
 			'blur .edit': 'close'
 		},
 
-		// The TodoView listens for changes to its model, re-rendering. Since there's
-		// a one-to-one correspondence between a **Todo** and a **TodoView** in this
+		// The LapView listens for changes to its model, re-rendering. Since there's
+		// a one-to-one correspondence between a **Lap** and a **LapView** in this
 		// app, we set a direct reference on the model for convenience.
 		initialize: function () {
 			this.listenTo(this.model, 'change', this.render);
@@ -50,8 +50,8 @@ var app = app || {};
 		isHidden: function () {
 			var isCompleted = this.model.get('completed');
 			return (// hidden cases only
-				(!isCompleted && app.TodoFilter === 'completed') ||
-				(isCompleted && app.TodoFilter === 'active')
+				(!isCompleted && app.LapFilter === 'completed') ||
+				(isCompleted && app.LapFilter === 'active')
 			);
 		},
 

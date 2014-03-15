@@ -4,14 +4,14 @@ var app = app || {};
 (function () {
 	'use strict';
 
-	// Todo Collection
+	// Lap Collection
 	// ---------------
 
 	// The collection of todos is backed by *localStorage* instead of a remote
 	// server.
-	var Todos = Backbone.Collection.extend({
+	var Laps = Backbone.Collection.extend({
 		// Reference to this collection's model.
-		model: app.Todo,
+		model: app.Lap,
 
 		// Save all of the todo items under the `"todos"` namespace.
 		localStorage: new Backbone.LocalStorage('laptimer'),
@@ -49,7 +49,7 @@ var app = app || {};
 			return this.totalTime() / this.size();
 		},
 
-		// We keep the Todos in sequential order, despite being saved by unordered
+		// We keep the Laps in sequential order, despite being saved by unordered
 		// GUID in the database. This generates the next order number for new items.
 		nextOrder: function () {
 			if (!this.length) {
@@ -58,12 +58,12 @@ var app = app || {};
 			return this.last().get('order') + 1;
 		},
 
-		// Todos are sorted by their original insertion order.
+		// Laps are sorted by their original insertion order.
 		comparator: function (todo) {
-			return todo.get('order');
+			return this.size() - todo.get('order');
 		}
 	});
 
-	// Create our global collection of **Todos**.
-	app.todos = new Todos();
+	// Create our global collection of **Laps**.
+	app.todos = new Laps();
 })();

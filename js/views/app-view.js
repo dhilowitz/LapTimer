@@ -26,7 +26,7 @@ var app = app || {};
 			'click #clear-completed': 'clearCompleted',
 		},
 
-		// At initialization we bind to the relevant events on the `Todos`
+		// At initialization we bind to the relevant events on the `Laps`
 		// collection, when items are added or changed. Kick things off by
 		// loading any preexisting todos that might be saved in *localStorage*.
 		initialize: function () {
@@ -91,7 +91,7 @@ var app = app || {};
 
 				this.$('#filters li a')
 					.removeClass('selected')
-					.filter('[href="#/' + (app.TodoFilter || '') + '"]')
+					.filter('[href="#/' + (app.LapFilter || '') + '"]')
 					.addClass('selected');
 			} else {
 				this.$main.hide();
@@ -109,11 +109,11 @@ var app = app || {};
 		// Add a single todo item to the list by creating a view for it, and
 		// appending its element to the `<ul>`.
 		addOne: function (todo) {
-			var view = new app.TodoView({ model: todo });
+			var view = new app.LapView({ model: todo });
 			$('#todo-list').append(view.render().el);
 		},
 
-		// Add all items in the **Todos** collection at once.
+		// Add all items in the **Laps** collection at once.
 		addAll: function () {
 			this.$('#todo-list').html('');
 			app.todos.each(this.addOne, this);
@@ -127,7 +127,7 @@ var app = app || {};
 			app.todos.each(this.filterOne, this);
 		},
 
-		// Generate the attributes for a new Todo item.
+		// Generate the attributes for a new Lap item.
 		newAttributes: function () {
 			return {
 				time: 0,
@@ -179,7 +179,7 @@ var app = app || {};
 		},
 
 
-		// If you hit start in the main input field, create new **Todo** model,
+		// If you hit start in the main input field, create new **Lap** model,
 		// persisting it to *localStorage*.
 		startStopTimer: function (e) {
 			if(!this.timerRunning) {
@@ -239,7 +239,7 @@ var app = app || {};
 			return this.currentLapModel.set('time', this.currentLapTime());
 		},
 
-		// If you hit start in the main input field, create new **Todo** model,
+		// If you hit start in the main input field, create new **Lap** model,
 		// persisting it to *localStorage*.
 		nextLap: function (e) {
 			if(!this.timerRunning) 

@@ -4,11 +4,11 @@ var app = app || {};
 (function () {
 	'use strict';
 
-	// Todo Model
+	// Lap Model
 	// ----------
 
-	// Our basic **Todo** model has `title`, `order`, and `completed` attributes.
-	app.Todo = Backbone.Model.extend({
+	// Our basic **Lap** model has `title`, `order`, and `completed` attributes.
+	app.Lap = Backbone.Model.extend({
 		// Default attributes for the lap
 		// and ensure that each todo created has `title` and `completed` keys.
 		defaults: {
