@@ -13,6 +13,7 @@ var app = app || {};
 		// and ensure that each todo created has `title` and `completed` keys.
 		defaults: {
 			title: '',
+			time: 0,
 			completed: false
 		},
 
@@ -21,6 +22,9 @@ var app = app || {};
 			this.save({
 				completed: !this.get('completed')
 			});
+		},
+		displayTime: function() {
+			return "DisplayTime works!";
 		}
 	});
 })();

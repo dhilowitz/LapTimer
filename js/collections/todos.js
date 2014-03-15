@@ -14,7 +14,7 @@ var app = app || {};
 		model: app.Todo,
 
 		// Save all of the todo items under the `"todos"` namespace.
-		localStorage: new Backbone.LocalStorage('todos-backbone'),
+		localStorage: new Backbone.LocalStorage('laptimer'),
 
 		// Filter down the list of all todo items that are finished.
 		completed: function () {
@@ -30,7 +30,7 @@ var app = app || {};
 
 		totalTime: function() {
 			var total = 0; 
-			this.each(function(lap) {total = total + parseInt(lap.get('title'));} );
+			this.each(function(lap) {total = total + parseFloat(lap.get('time'));} );
 			return total;
 		},
 

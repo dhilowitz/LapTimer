@@ -16,12 +16,12 @@ var app = app || {};
 
 		// Our template for the line of statistics at the bottom of the app.
 		statsTemplate: _.template($('#stats-template').html()),
+		timeTemplate: _.template($('#time-template').html()),
 
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
-			'keypress #new-todo': 'createOnEnter',
 			'click #start-button': 'startStopTimer',
-			'click #reset-button': 'resetTimer',
+			'click #reset-button': 'clearCompleted',
 			'click #lap-button': 'nextLap',
 			'click #clear-completed': 'clearCompleted',
 		},
@@ -30,10 +30,14 @@ var app = app || {};
 		// collection, when items are added or changed. Kick things off by
 		// loading any preexisting todos that might be saved in *localStorage*.
 		initialize: function () {
-			this.$input = this.$('#new-todo');
 			this.$startButton = this.$('#start-button');
+			this.$lapButton = this.$('#lap-button');
+			this.$lapButton.hide();
+			this.$resetButton = this.$('#reset-button');
 			this.$footer = this.$('#footer');
+			this.$time = this.$('#time');
 			this.$main = this.$('#main');
+			this.intervalID = null;
 
 			this.listenTo(app.todos, 'add', this.addOne);
 			this.listenTo(app.todos, 'reset', this.addAll);
@@ -49,13 +53,19 @@ var app = app || {};
 		render: function () {
 			var completed = app.todos.completed().length;
 			var remaining = app.todos.size();
-			var average = app.todos.average();
-			// var totalTime = app.todos.totalTime().length;
-			// var lapTime = app.todos.average().length;
+			var average = timeFormat(app.todos.average());
+			var totalTime = timeFormat(app.todos.totalTime());
+			var lapTime = timeFormat(this.currentLapTime());
+
+			this.$time.html(this.timeTemplate({
+				totalTime: totalTime,
+				lapTime: lapTime
+			}));
 
 			if (app.todos.length) {
 				this.$main.show();
 				this.$footer.show();
+
 
 				this.$footer.html(this.statsTemplate({
 					completed: completed,
@@ -98,39 +108,91 @@ var app = app || {};
 		// Generate the attributes for a new Todo item.
 		newAttributes: function () {
 			return {
-				title: this.$input.val().trim(),
+				time: 0,
 				order: app.todos.nextOrder(),
-				completed: true
+				completed: false
 			};
-		},
-
-		// If you hit return in the main input field, create new **Todo** model,
-		// persisting it to *localStorage*.
-		createOnEnter: function (e) {
-			if (e.which !== ENTER_KEY || !this.$input.val().trim()) {
-				return;
-			}
-
-			app.todos.create(this.newAttributes());
-			this.$input.val('');
 		},
 
 		// If you hit start in the main input field, create new **Todo** model,
 		// persisting it to *localStorage*.
 		startStopTimer: function (e) {
-			this.$input.val("124");
+			if(!this.timerRunning) {
+				this.startTimer();
+				this.$startButton.html("Stop");
+				this.$lapButton.show();
+			} else {
+				this.stopTimer();
+				this.$startButton.html("Start");
+				this.$lapButton.hide();
+			}
+		},
 
-			app.todos.create(this.newAttributes());
-			this.$input.val('');
+		startTimer: function (e) {
+			console.log("Start Timer");
+
+			var d = new Date();
+			this.timerStarted = this.lapStarted = d.getTime();
+
+			this.currentLapModel = app.todos.create(this.newAttributes());
+
+			if(!this.intervalID) {
+				(function(view) {
+				  view.intervalID = window.setInterval(function() { view.updateCurrentLapTime(); }, 113);
+				})(this);
+			}
+
+			this.timerRunning = true;
+		},
+
+		stopTimer: function (e) {
+			console.log("Stop Timer");
+
+			//Set current lap to completed
+			this.currentLapModel.set('completed', true);
+			this.currentLapModel.save();
+
+			window.clearInterval(this.intervalID);
+			this.intervalID = null;
+
+			var d = new Date();
+			this.timerStarted = this.lapStarted = 0;
+			this.currentLapModel = null;
+			this.timerRunning = false;
+		},
+
+		currentLapTime: function() {
+			if(!this.lapStarted)
+				return 0;
+
+			var d = new Date();
+			return (d.getTime() - this.lapStarted);
+		},
+
+		updateCurrentLapTime: function() {
+			// this.currentLapModel.set('time', this.currentLapTime())
+			return this.currentLapModel.set('time', this.currentLapTime());
 		},
 
 		// If you hit start in the main input field, create new **Todo** model,
 		// persisting it to *localStorage*.
 		nextLap: function (e) {
-			this.$input.val("124");
+			if(!this.timerRunning) 
+				return;
 
-			app.todos.create(this.newAttributes());
-			this.$input.val('');
+			console.log("New Lap");
+
+			//Set current lap to completed
+			this.currentLapModel.set('completed', true);
+			this.currentLapModel.save();
+
+			//Reset the this.lapStarted variable
+			var d = new Date();
+			this.lapStarted = d.getTime();
+
+			//Make new lap
+			this.currentLapModel = app.todos.create(this.newAttributes());
+
 		},
 
 		// Clear all completed todo items, destroying their models.
@@ -138,7 +200,5 @@ var app = app || {};
 			_.invoke(app.todos.completed(), 'destroy');
 			return false;
 		}
-
-		
 	});
 })(jQuery);

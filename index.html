@@ -11,15 +11,12 @@
 			<header id="header">
 				<h1>lap timer</h1>
 				<div id="timer-tray">
-					<div id="time">
-						<span id="total-time">0.000</span>
-						<span id="lap-time">0.000</span>
-					</div>
+					<div id="time"></div>
+
 					<button id="start-button" value="Start">Start</button>
 					<button id="lap-button" value="Start">Lap</button>
-					<button id="stop-button">Stop</button>
+					<button id="reset-button">Reset</button>
 				</div>
-				<input id="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section id="main">
 				<ul id="todo-list"></ul>
@@ -47,8 +44,12 @@
 			
 			
 			<% if (completed) { %>
-			<button id="clear-completed">Clear completed (<%= completed %>)</button>
+			<button id="clear-completed">Clear all laps (<%= completed %>)</button>
 			<% } %>
+		</script>
+		<script type="text/template" id="time-template">
+			<span id="total-time"><%= totalTime %></span>
+			<span id="lap-time"><%= lapTime %></span>
 		</script>
 		<scripta src="bower_components/todomvc-common/base.js"></script>
 		<script src="bower_components/jquery/jquery.js"></script>

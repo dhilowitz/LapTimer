@@ -35,7 +35,9 @@ var app = app || {};
 
 		// Re-render the titles of the todo item.
 		render: function () {
-			this.$el.html(this.template(this.model.toJSON()));
+			var json = this.model.toJSON();
+			json.title = timeFormat(json.time);
+			this.$el.html(this.template(json));
 			this.$el.toggleClass('completed', this.model.get('completed'));
 			this.toggleVisible();
 			this.$input = this.$('.edit');

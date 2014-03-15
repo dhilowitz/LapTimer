@@ -152,7 +152,7 @@ input[type="checkbox"] {
 	line-height:56pt;
 }
 
-#start-button, #stop-button, #lap-button {
+#start-button, #reset-button, #lap-button {
 	background: rgba(0, 0, 0, 0.1);
 	font-size: 23px;
 	padding: 0 10px;
@@ -161,7 +161,7 @@ input[type="checkbox"] {
 	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
 }
 
-#start-button:hover, #stop-button:hover, #lap-button:hover {
+#start-button:hover, #reset-button:hover, #lap-button:hover {
 	background: rgba(0, 0, 0, 0.15);
 	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
 }

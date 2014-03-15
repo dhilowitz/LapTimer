@@ -3,6 +3,34 @@
 var app = app || {};
 var ENTER_KEY = 13;
 
+function timeFormat(ms) {
+	ms = ms.toFixed(0);
+
+	var seconds = parseInt(ms / 1000);
+	var hh = Math.floor(seconds / 3600);
+	var mm = Math.floor((seconds - (hh * 3600)) / 60);
+	var ss = seconds - (hh * 3600) - (mm * 60);
+	var ms = ms - (ss * 1000) - (mm * 60 * 1000) - (hh * 60 * 60 * 1000);
+
+	if(ms > 0) {
+		ms = (((ms*1000).toFixed(3))/1000);
+	}
+
+
+	if(hh > 0) {
+		if (mm < 10) {mm = '0' + mm;}
+		if (ss < 10) {ss = '0' + ss;}
+
+		return hh + ':' + mm + ':' + ss + '.' + ms;
+	} else if (mm > 0) {
+		if (ss < 10) {ss = '0' + ss;}
+
+		return mm + ':' + ss + '.' + ms;
+	} else {
+		return ss + '.' + ms;
+	}
+}
+
 $(function () {
 	'use strict';
 
