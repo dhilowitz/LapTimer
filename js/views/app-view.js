@@ -17,6 +17,9 @@ var app = app || {};
 		// Our template for the line of statistics at the bottom of the app.
 		statsTemplate: _.template($('#stats-template').html()),
 		timeTemplate: _.template($('#time-template').html()),
+		data: [],
+		totalPoints: 300,
+		plot: null,
 
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
@@ -39,6 +42,22 @@ var app = app || {};
 			this.$main = this.$('#main');
 			this.intervalID = null;
 
+			this.data = [];
+			this.totalPoints = 300;
+
+			this.plot = $.plot("#plot", [ this.getRandomData() ], {
+				series: {
+					shadowSize: 0	// Drawing is faster without shadows
+				},
+				yaxis: {
+					min: 0,
+					max: 100
+				},
+				xaxis: {
+					show: false
+				}
+			});
+			
 			this.listenTo(app.todos, 'add', this.addOne);
 			this.listenTo(app.todos, 'reset', this.addAll);
 			this.listenTo(app.todos, 'change:completed', this.filterOne);
@@ -46,6 +65,7 @@ var app = app || {};
 			this.listenTo(app.todos, 'all', this.render);
 
 			app.todos.fetch();
+
 		},
 
 		// Re-rendering the App just means refreshing the statistics -- the rest
@@ -82,6 +102,11 @@ var app = app || {};
 				this.$footer.hide();
 			}
 
+			this.plot.setData([this.getRandomData()]);
+
+			// Since the axes don't change, we don't need to call this.plot.setupGrid()
+
+			this.plot.draw();
 		},
 
 		// Add a single todo item to the list by creating a view for it, and
@@ -113,6 +138,38 @@ var app = app || {};
 				completed: false
 			};
 		},
+
+		getRandomData:function() {
+
+			if (this.data.length > 0)
+				this.data = this.data.slice(1);
+
+			// Do a random walk
+
+			while (this.data.length < this.totalPoints) {
+
+				var prev = this.data.length > 0 ? this.data[this.data.length - 1] : 50,
+					y = prev + Math.random() * 10 - 5;
+
+				if (y < 0) {
+					y = 0;
+				} else if (y > 100) {
+					y = 100;
+				}
+
+				this.data.push(y);
+			}
+
+			// Zip the generated y values with the x values
+
+			var res = [];
+			for (var i = 0; i < this.data.length; ++i) {
+				res.push([i, this.data[i]])
+			}
+
+			return res;
+		},
+
 
 		// If you hit start in the main input field, create new **Todo** model,
 		// persisting it to *localStorage*.
