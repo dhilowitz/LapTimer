@@ -34,6 +34,16 @@ var app = app || {};
 			return total;
 		},
 
+		graphData: function() {
+			var res = [];
+			var i = 0; 
+			this.each(function(lap) {
+				res.push([i, parseFloat(lap.get('time')/1000.0)]);
+				i++;
+			});
+			return res;
+		},
+
 		// Filter down the list to only todo items that are still not finished.
 		average: function () {
 			return this.totalTime() / this.size();

@@ -17,9 +17,6 @@ var app = app || {};
 		// Our template for the line of statistics at the bottom of the app.
 		statsTemplate: _.template($('#stats-template').html()),
 		timeTemplate: _.template($('#time-template').html()),
-		data: [],
-		totalPoints: 300,
-		plot: null,
 
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
@@ -43,21 +40,20 @@ var app = app || {};
 			this.intervalID = null;
 
 			this.data = [];
-			this.totalPoints = 300;
 
-			this.plot = $.plot("#plot", [ this.getRandomData() ], {
+			this.plot = $.plot("#plot", [ this.getGraphData() ], {
 				series: {
 					shadowSize: 0	// Drawing is faster without shadows
 				},
 				yaxis: {
-					min: 0,
-					max: 100
+					min: 0
+					// max: 100
 				},
 				xaxis: {
 					show: false
 				}
 			});
-			
+
 			this.listenTo(app.todos, 'add', this.addOne);
 			this.listenTo(app.todos, 'reset', this.addAll);
 			this.listenTo(app.todos, 'change:completed', this.filterOne);
@@ -102,9 +98,10 @@ var app = app || {};
 				this.$footer.hide();
 			}
 
-			this.plot.setData([this.getRandomData()]);
+			this.plot.setData([this.getGraphData()]);
 
-			// Since the axes don't change, we don't need to call this.plot.setupGrid()
+			// Since the axes don't change, we don't need to call 
+			this.plot.setupGrid()
 
 			this.plot.draw();
 		},
@@ -139,34 +136,45 @@ var app = app || {};
 			};
 		},
 
-		getRandomData:function() {
+		getGraphData:function() {
 
-			if (this.data.length > 0)
-				this.data = this.data.slice(1);
+			// if (this.data.length > 0)
+			// 	this.data = this.data.slice(1);
 
-			// Do a random walk
+			// // Do a random walk
 
-			while (this.data.length < this.totalPoints) {
+			// while (this.data.length < this.totalPoints) {
 
-				var prev = this.data.length > 0 ? this.data[this.data.length - 1] : 50,
-					y = prev + Math.random() * 10 - 5;
+			// 	var prev = this.data.length > 0 ? this.data[this.data.length - 1] : 50,
+			// 		y = prev + Math.random() * 10 - 5;
 
-				if (y < 0) {
-					y = 0;
-				} else if (y > 100) {
-					y = 100;
-				}
+			// 	if (y < 0) {
+			// 		y = 0;
+			// 	} else if (y > 100) {
+			// 		y = 100;
+			// 	}
 
-				this.data.push(y);
-			}
+			// 	this.data.push(y);
+			// }
 
-			// Zip the generated y values with the x values
+			// // Zip the generated y values with the x values
+
+			// // var res = [];
+			// // for (var i = 0; i < this.data.length; ++i) {
+			// // 	res.push([i, this.data[i]])
+			// // }
+
+			// var res = [];
+			// for (var i = 0; i < app.todos.length; ++i) {
+			// 	res.push([i, app.todos.i]])
+			// }
 
 			var res = [];
-			for (var i = 0; i < this.data.length; ++i) {
-				res.push([i, this.data[i]])
-			}
-
+			var i = 0; 
+			app.todos.each(function(lap) {
+				res.push([i, parseFloat(lap.get('time')/1000.0)]);
+				i++;
+			});
 			return res;
 		},
 
