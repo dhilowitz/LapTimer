@@ -54,23 +54,23 @@ var app = app || {};
 				}
 			});
 
-			this.listenTo(app.todos, 'add', this.addOne);
-			this.listenTo(app.todos, 'reset', this.addAll);
-			this.listenTo(app.todos, 'change:completed', this.filterOne);
-			this.listenTo(app.todos, 'filter', this.filterAll);
-			this.listenTo(app.todos, 'all', this.render);
+			this.listenTo(app.laps, 'add', this.addOne);
+			this.listenTo(app.laps, 'reset', this.addAll);
+			this.listenTo(app.laps, 'change:completed', this.filterOne);
+			this.listenTo(app.laps, 'filter', this.filterAll);
+			this.listenTo(app.laps, 'all', this.render);
 
-			app.todos.fetch();
+			app.laps.fetch();
 
 		},
 
 		// Re-rendering the App just means refreshing the statistics -- the rest
 		// of the app doesn't change.
 		render: function () {
-			var completed = app.todos.completed().length;
-			var remaining = app.todos.size();
-			var average = timeFormat(app.todos.average());
-			var totalTime = timeFormat(app.todos.totalTime());
+			var completed = app.laps.completed().length;
+			var remaining = app.laps.size();
+			var average = timeFormat(app.laps.average());
+			var totalTime = timeFormat(app.laps.totalTime());
 			var lapTime = timeFormat(this.currentLapTime());
 
 			this.$time.html(this.timeTemplate({
@@ -78,7 +78,7 @@ var app = app || {};
 				lapTime: lapTime
 			}));
 
-			if (app.todos.length) {
+			if (app.laps.length) {
 				this.$main.show();
 				this.$footer.show();
 
@@ -110,13 +110,13 @@ var app = app || {};
 		// appending its element to the `<ul>`.
 		addOne: function (todo) {
 			var view = new app.LapView({ model: todo });
-			$('#todo-list').append(view.render().el);
+			$('#todo-list').prepend(view.render().el);
 		},
 
 		// Add all items in the **Laps** collection at once.
 		addAll: function () {
 			this.$('#todo-list').html('');
-			app.todos.each(this.addOne, this);
+			app.laps.each(this.addOne, this);
 		},
 
 		filterOne: function (todo) {
@@ -124,58 +124,20 @@ var app = app || {};
 		},
 
 		filterAll: function () {
-			app.todos.each(this.filterOne, this);
+			app.laps.each(this.filterOne, this);
 		},
 
 		// Generate the attributes for a new Lap item.
 		newAttributes: function () {
 			return {
 				time: 0,
-				order: app.todos.nextOrder(),
+				order: app.laps.nextOrder(),
 				completed: false
 			};
 		},
 
 		getGraphData:function() {
-
-			// if (this.data.length > 0)
-			// 	this.data = this.data.slice(1);
-
-			// // Do a random walk
-
-			// while (this.data.length < this.totalPoints) {
-
-			// 	var prev = this.data.length > 0 ? this.data[this.data.length - 1] : 50,
-			// 		y = prev + Math.random() * 10 - 5;
-
-			// 	if (y < 0) {
-			// 		y = 0;
-			// 	} else if (y > 100) {
-			// 		y = 100;
-			// 	}
-
-			// 	this.data.push(y);
-			// }
-
-			// // Zip the generated y values with the x values
-
-			// // var res = [];
-			// // for (var i = 0; i < this.data.length; ++i) {
-			// // 	res.push([i, this.data[i]])
-			// // }
-
-			// var res = [];
-			// for (var i = 0; i < app.todos.length; ++i) {
-			// 	res.push([i, app.todos.i]])
-			// }
-
-			var res = [];
-			var i = 0; 
-			app.todos.each(function(lap) {
-				res.push([i, parseFloat(lap.get('time')/1000.0)]);
-				i++;
-			});
-			return res;
+			return app.laps.graphData();
 		},
 
 
@@ -199,7 +161,7 @@ var app = app || {};
 			var d = new Date();
 			this.timerStarted = this.lapStarted = d.getTime();
 
-			this.currentLapModel = app.todos.create(this.newAttributes());
+			this.currentLapModel = app.laps.create(this.newAttributes());
 
 			if(!this.intervalID) {
 				(function(view) {
@@ -256,13 +218,13 @@ var app = app || {};
 			this.lapStarted = d.getTime();
 
 			//Make new lap
-			this.currentLapModel = app.todos.create(this.newAttributes());
+			this.currentLapModel = app.laps.create(this.newAttributes());
 
 		},
 
 		// Clear all completed todo items, destroying their models.
 		clearCompleted: function () {
-			_.invoke(app.todos.completed(), 'destroy');
+			_.invoke(app.laps.completed(), 'destroy');
 			return false;
 		}
 	});

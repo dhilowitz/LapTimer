@@ -17,7 +17,7 @@ var app = app || {};
 
 			// Trigger a collection filter event, causing hiding/unhiding
 			// of Lap view items
-			app.todos.trigger('filter');
+			app.laps.trigger('filter');
 		}
 	});
 

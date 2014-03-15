@@ -60,10 +60,10 @@ var app = app || {};
 
 		// Laps are sorted by their original insertion order.
 		comparator: function (todo) {
-			return this.size() - todo.get('order');
+			return todo.get('order');
 		}
 	});
 
 	// Create our global collection of **Laps**.
-	app.todos = new Laps();
+	app.laps = new Laps();
 })();
