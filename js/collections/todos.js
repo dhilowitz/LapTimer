@@ -28,6 +28,17 @@ var app = app || {};
 			return this.without.apply(this, this.completed());
 		},
 
+		totalTime: function() {
+			var total = 0; 
+			this.each(function(lap) {total = total + parseInt(lap.get('title'));} );
+			return total;
+		},
+
+		// Filter down the list to only todo items that are still not finished.
+		average: function () {
+			return this.totalTime() / this.size();
+		},
+
 		// We keep the Todos in sequential order, despite being saved by unordered
 		// GUID in the database. This generates the next order number for new items.
 		nextOrder: function () {

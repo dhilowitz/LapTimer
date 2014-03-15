@@ -10,8 +10,15 @@
 		<section id="todoapp">
 			<header id="header">
 				<h1>lap timer</h1>
-				<button id="start-button" value="Start">Start</button>
-				<button id="stop-button">Stop</button>
+				<div id="timer-tray">
+					<div id="time">
+						<span id="total-time">0.000</span>
+						<span id="lap-time">0.000</span>
+					</div>
+					<button id="start-button" value="Start">Start</button>
+					<button id="lap-button" value="Start">Lap</button>
+					<button id="stop-button">Stop</button>
+				</div>
 				<input id="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section id="main">
@@ -33,18 +40,12 @@
 			<input class="edit" value="<%- title %>">
 		</script>
 		<script type="text/template" id="stats-template">
-			<span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'lap' : 'laps' %></span>
-			<ul id="filters">
-				<li>
-					<a class="selected" href="#/">All</a>
-				</li>
-				<li>
-					<a href="#/active">Active</a>
-				</li>
-				<li>
-					<a href="#/completed">Completed</a>
-				</li>
-			</ul>
+			<span id="todo-count">
+				<strong><%= remaining %></strong> <%= remaining === 1 ? 'lap' : 'laps' %>
+				| avg: <%= average %>
+			</span>
+			
+			
 			<% if (completed) { %>
 			<button id="clear-completed">Clear completed (<%= completed %>)</button>
 			<% } %>

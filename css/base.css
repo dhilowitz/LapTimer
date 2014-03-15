@@ -22,7 +22,7 @@ button {
 body {
 	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
-	background: #eaeaea url('bg.png');
+	background: #eaeaea url('../images/bg.png');
 	color: #4d4d4d;
 	width: 550px;
 	margin: 0 auto;
@@ -135,6 +135,37 @@ input[type="checkbox"] {
 	font-smoothing: antialiased;
 }
 
+#timer-tray {
+	/*height: 64px;*/
+	padding: 4px;
+	text-align: center;
+}
+
+#time {
+	font-size:40pt;
+	line-height:56pt;
+}
+
+#lap-time {
+	font-size:30pt;
+	color:#ccc;
+	line-height:56pt;
+}
+
+#start-button, #stop-button, #lap-button {
+	background: rgba(0, 0, 0, 0.1);
+	font-size: 23px;
+	padding: 0 10px;
+	margin: 2px;
+	border-radius: 3px;
+	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+#start-button:hover, #stop-button:hover, #lap-button:hover {
+	background: rgba(0, 0, 0, 0.15);
+	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
+}
+
 #new-todo {
 	padding: 16px 16px 16px 60px;
 	border: none;
@@ -147,31 +178,6 @@ input[type="checkbox"] {
 	position: relative;
 	z-index: 2;
 	border-top: 1px dotted #adadad;
-}
-
-label[for='toggle-all'] {
-	display: none;
-}
-
-#toggle-all {
-	position: absolute;
-	top: -42px;
-	left: -4px;
-	width: 40px;
-	text-align: center;
-	/* Mobile Safari */
-	border: none;
-}
-
-#toggle-all:before {
-	content: '»';
-	font-size: 28px;
-	color: #d9d9d9;
-	padding: 0 25px 7px;
-}
-
-#toggle-all:checked:before {
-	color: #737373;
 }
 
 #todo-list {
@@ -349,22 +355,7 @@ label[for='toggle-all'] {
 	font-weight: bold;
 }
 
-#start-button, #stop-button, #lap-button {
-	float: right;
-	position: relative;
-	line-height: 20px;
-	text-decoration: none;
-	background: rgba(0, 0, 0, 0.1);
-	font-size: 13px;
-	padding: 0 10px;
-	border-radius: 3px;
-	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
-}
 
-#start-button:hover, #stop-button:hover, #lap-button:hover {
-	background: rgba(0, 0, 0, 0.15);
-	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
-}
 
 #clear-completed {
 	float: right;
@@ -401,25 +392,12 @@ label[for='toggle-all'] {
 */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	#toggle-all,
 	#todo-list li .toggle {
 		background: none;
 	}
 
 	#todo-list li .toggle {
 		height: 40px;
-	}
-
-	#toggle-all {
-		top: -56px;
-		left: -15px;
-		width: 65px;
-		height: 41px;
-		-webkit-transform: rotate(90deg);
-		-ms-transform: rotate(90deg);
-		transform: rotate(90deg);
-		-webkit-appearance: none;
-		appearance: none;
 	}
 }
 

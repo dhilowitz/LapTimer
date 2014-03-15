@@ -20,7 +20,9 @@ var app = app || {};
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
 			'keypress #new-todo': 'createOnEnter',
-			'click #start-button': 'startTimer',
+			'click #start-button': 'startStopTimer',
+			'click #reset-button': 'resetTimer',
+			'click #lap-button': 'nextLap',
 			'click #clear-completed': 'clearCompleted',
 		},
 
@@ -46,7 +48,10 @@ var app = app || {};
 		// of the app doesn't change.
 		render: function () {
 			var completed = app.todos.completed().length;
-			var remaining = app.todos.remaining().length;
+			var remaining = app.todos.size();
+			var average = app.todos.average();
+			// var totalTime = app.todos.totalTime().length;
+			// var lapTime = app.todos.average().length;
 
 			if (app.todos.length) {
 				this.$main.show();
@@ -54,7 +59,8 @@ var app = app || {};
 
 				this.$footer.html(this.statsTemplate({
 					completed: completed,
-					remaining: remaining
+					remaining: remaining,
+					average: average
 				}));
 
 				this.$('#filters li a')
@@ -94,7 +100,7 @@ var app = app || {};
 			return {
 				title: this.$input.val().trim(),
 				order: app.todos.nextOrder(),
-				completed: false
+				completed: true
 			};
 		},
 
@@ -111,7 +117,16 @@ var app = app || {};
 
 		// If you hit start in the main input field, create new **Todo** model,
 		// persisting it to *localStorage*.
-		startTimer: function (e) {
+		startStopTimer: function (e) {
+			this.$input.val("124");
+
+			app.todos.create(this.newAttributes());
+			this.$input.val('');
+		},
+
+		// If you hit start in the main input field, create new **Todo** model,
+		// persisting it to *localStorage*.
+		nextLap: function (e) {
 			this.$input.val("124");
 
 			app.todos.create(this.newAttributes());
