@@ -22,9 +22,6 @@ var app = app || {};
 			this.save({
 				completed: !this.get('completed')
 			});
-		},
-		displayTime: function() {
-			return "DisplayTime works!";
 		}
 	});
 })();
