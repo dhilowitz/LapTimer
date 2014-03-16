@@ -51,7 +51,8 @@ var app = app || {};
 					// max: 100
 				},
 				xaxis: {
-					show: false
+					// show: false
+					minTickSize: 1
 				}
 			});
 

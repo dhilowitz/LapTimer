@@ -1,11 +1,10 @@
 {
-  "name": "todomvc-backbone",
-  "version": "0.0.0",
+  "name": "LapTimer",
+  "version": "1.0.0",
   "dependencies": {
     "backbone": "~1.0.0",
     "underscore": "~1.4.4",
-    "jquery": "~1.9.1",
-    "todomvc-common": "~0.1.4",
+    "jquery": "~2.0.0",
     "backbone.localStorage": "~1.1.0",
     "flot": null,
     "bootstrap":"~3.0.0"
