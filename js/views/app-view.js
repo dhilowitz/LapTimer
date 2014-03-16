@@ -12,7 +12,7 @@ var app = app || {};
 
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
-		el: '#todoapp',
+		el: '#laptimer',
 
 		// Our template for the line of statistics at the bottom of the app.
 		statsTemplate: _.template($('#stats-template').html()),
@@ -254,7 +254,7 @@ var app = app || {};
 		// If you hit start in the main input field, create new **Lap** model,
 		// persisting it to *localStorage*.
 		nextLap: function (e) {
-			if(!this.timerRunning) 
+			if(this.timerStatus != "Running") 
 				return;
 
 			console.log("New Lap");
