@@ -111,12 +111,12 @@ var app = app || {};
 		// appending its element to the `<ul>`.
 		addOne: function (todo) {
 			var view = new app.LapView({ model: todo });
-			$('#todo-list').prepend(view.render().el);
+			$('#lap-list').prepend(view.render().el);
 		},
 
 		// Add all items in the **Laps** collection at once.
 		addAll: function () {
-			this.$('#todo-list').html('');
+			this.$('#lap-list').html('');
 			app.laps.each(this.addOne, this);
 		},
 

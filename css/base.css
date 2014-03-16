@@ -170,41 +170,41 @@ input[type="checkbox"] {
 	border-top: 1px dotted #adadad;
 }
 
-#todo-list {
+#lap-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-#todo-list li {
+#lap-list li {
 	position: relative;
 	font-size: 24px;
 	border-bottom: 1px dotted #ccc;
 }
 
-#todo-list li:last-child {
+#lap-list li:last-child {
 	border-bottom: none;
 }
 
-#todo-list li.editing {
+#lap-list li.editing {
 	border-bottom: none;
 	padding: 0;
 }
 
-#todo-list li.editing .edit {
+#lap-list li.editing .edit {
 	display: block;
 	width: 506px;
 	padding: 13px 17px 12px 17px;
 	margin: 0 0 0 43px;
 }
 
-#todo-list li.editing .view {
+#lap-list li.editing .view {
 	display: none;
 }
 
 
 
-#todo-list li label {
+#lap-list li label {
 	white-space: pre;
 	word-break: break-word;
 	padding: 15px 60px 15px 15px;
@@ -215,12 +215,12 @@ input[type="checkbox"] {
 	transition: color 0.4s;
 }
 
-#todo-list li.completed label {
+#lap-list li.completed label {
 	color: #a9a9a9;
 	text-decoration: line-through;
 }
 
-#todo-list li .destroy {
+#lap-list li .destroy {
 	display: none;
 	position: absolute;
 	top: 0;
@@ -235,7 +235,7 @@ input[type="checkbox"] {
 	transition: all 0.2s;
 }
 
-#todo-list li .destroy:hover {
+#lap-list li .destroy:hover {
 	text-shadow: 0 0 1px #000,
 				 0 0 10px rgba(199, 107, 107, 0.8);
 	-webkit-transform: scale(1.3);
@@ -243,19 +243,19 @@ input[type="checkbox"] {
 	transform: scale(1.3);
 }
 
-#todo-list li .destroy:after {
+#lap-list li .destroy:after {
 	content: '✖';
 }
 
-#todo-list li:hover .destroy {
+#lap-list li:hover .destroy {
 	display: block;
 }
 
-#todo-list li .edit {
+#lap-list li .edit {
 	display: none;
 }
 
-#todo-list li.editing:last-child {
+#lap-list li.editing:last-child {
 	margin-bottom: -1px;
 }
 
@@ -351,11 +351,11 @@ input[type="checkbox"] {
 */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	#todo-list li .toggle {
+	#lap-list li .toggle {
 		background: none;
 	}
 
-	#todo-list li .toggle {
+	#lap-list li .toggle {
 		height: 40px;
 	}
 }

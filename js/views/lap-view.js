@@ -17,10 +17,10 @@ var app = app || {};
 
 		// The DOM events specific to an item.
 		events: {
-			'dblclick label': 'edit',
+			// 'dblclick .view': 'edit',
 			'click .destroy': 'clear',
-			'keypress .edit': 'updateOnEnter',
-			'blur .edit': 'close'
+			// 'keypress .edit': 'updateOnEnter',
+			// 'blur .edit': 'close'
 		},
 
 		// The LapView listens for changes to its model, re-rendering. Since there's
