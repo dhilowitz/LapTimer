@@ -1,0 +1,51 @@
+#lap-list tr.editing .edit {
+	display: block;
+	/*width: 506px;*/
+	padding: 13px 17px 12px 17px;
+	/*margin: 0 0 0 43px;*/
+}
+
+#lap-list tr.editing .view {
+	display: none;
+}
+
+
+#lap-list tr .edit {
+	display: none;
+}
+
+.destroy:hover {
+	color:black;
+	/*display:none;*/
+}
+
+
+.destroy {
+	color:#aaaaaa;
+	/*display:none;*/
+}
+
+/* Customize container */
+@media (min-width: 468px) {
+  .container {
+    max-width: 430px;
+  }
+}
+
+#footer {
+	background-color: #f7f7f9;
+	padding-top:10px;
+	padding-bottom:10px
+}
+
+#lap-list tr.completed {
+	color: red;
+	text-decoration: strikethrough;
+	color: #cccccc;
+	font-weight: normal;
+	
+}
+
+#lap-list > tr.completed > td {
+	text-decoration: line-through;
+}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" data-framework="backbonejs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>LapTimer</title>
+		<link rel="stylesheet" href="css/base.css">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	</head>
+	<body>
+		<p>&nbsp;</p>
+		<div class="container">
+
+			
+			<div id="laptimer" class="panel panel-default">
+				<div class="panel-heading">
+					<h1 style="margin:0">
+						<span class="glyphicon glyphicon-time" style="vertical-align: bottom;"></span>
+						<span style="">Split Lap Timer</span></h1>
+				</div>
+				<div class="panel-body" >
+					<p>
+						<div id="plot" style="height:200px;"></div>
+							<div id="time" class="text-center" style="margin-bottom: 25px;"></div>
+							<div class="text-center">
+								<button class="btn btn-primary" id="start-button" value="Start">Start</button>
+								<button class="btn btn-default" id="lap-button" value="Start">Lap</button>
+								<button class="btn btn-default" id="reset-button">Reset</button>
+							</div>
+					</p>
+				</div>
+				<table id="main" class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Time</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="lap-list"></tbody>
+				</table>
+				<footer id="footer" class="panel-body"></footer>
+			</div>
+			<footer id="info">
+				<p>Written by <a href="https://github.com/dhilowitz">David Hilowitz</a></p>
+				<p>Based on the <a href="http://todomvc.com">TodoMVC</a> example by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
+			</footer>
+		</div>
+		<script type="text/template" id="item-template">
+			<td>
+				<%- order %>
+			</td>
+			<td>
+				<div class="view"><%- title %></div>
+				<input class="edit" value="<%- title %>">
+			</td>
+			<td class="text-right">
+				<a class="destroy"><span class="glyphicon glyphicon-remove"></span></a>
+			</td>
+		</script>
+		<script type="text/template" id="stats-template">
+			<div class="row">
+				<div class="col-xs-6" id="todo-count">
+					<strong><%= remaining %></strong> <%= remaining === 1 ? 'lap' : 'laps' %>
+					| avg: <%= average %>
+				</div>
+				
+				<div class="col-xs-6 text-right">
+					<% if (completed) { %>
+					<button class="btn btn-xs btn-default" id="clear-completed">Clear all laps (<%= completed %>)</button>
+					<% } %>
+				</div>
+			</div>
+		</script>
+		<script type="text/template" id="time-template">
+			<h1 id="total-time"><%= totalTime %> <small id="lap-time"><%= lapTime %></small></h2>
+		</script>
+		<scripta src="bower_components/todomvc-common/base.js"></script>
+		<script src="bower_components/jquery/jquery.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="bower_components/flot/jquery.flot.js"></script>
+		<script src="bower_components/underscore/underscore.js"></script>
+		<script src="bower_components/backbone/backbone.js"></script>
+		<script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+		<script src="js/models/lap.js"></script>
+		<script src="js/collections/laps.js"></script>
+		<script src="js/views/lap-view.js"></script>
+		<script src="js/views/app-view.js"></script>
+		<script src="js/routers/router.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
